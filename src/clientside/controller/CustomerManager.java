@@ -22,18 +22,6 @@ public interface CustomerManager {
      */
     public Customer getCustomerAccountsFullInfo(Long id);
     /**
-     * Get accounts list for customer.
-     * @param customer The Customer object.
-     * @return A list of Account objects containing account info.
-     */
-    public List<Account> getCustomerAccountsList(Customer customer);
-    /**
-     * Get movements list for customer.
-     * @param account
-     * @return A list of Movement objects containing movements info.
-     */
-    public List<Movement> getAccountMovementsList(Account account);
-    /**
      * Set server name for serverside application to be used 
      * @param serverName the serverName in which the server side application resides.
      */

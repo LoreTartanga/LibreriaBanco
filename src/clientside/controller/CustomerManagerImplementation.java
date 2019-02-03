@@ -5,14 +5,12 @@
  */
 package clientside.controller;
 
-import clientside.model.Account;
+
 import clientside.model.Customer;
-import clientside.model.Movement;
 import clientside.restclient.CustomerRESTClient;
-import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  * Customer manager implementation to get accounts information.
@@ -42,45 +40,19 @@ public class CustomerManagerImplementation implements CustomerManager{
         client.setWebTarget(URI, "customer");
         customer=client.find(Customer.class, id.toString());
         client.close();
-        if(customer!=null)
-            LOGGER.log(Level.INFO,"Got info for {0}",customer.toString());
+        if(customer==null)
+            throw new NoSuchElementException("Cannot find customer with id # "
+                                                +id.toString());
+        LOGGER.log(Level.INFO,"Got info for {0}",customer.toString());
         return customer;
     }
-    /**
-     * Get accounts list for customer.
-     * @param customer The Customer object.
-     * @return A list of Account objects containing account info.
-     */
-    @Override
-    public List<Account> getCustomerAccountsList(Customer customer) {
-        if(customer!=null)
-            LOGGER.log(Level.INFO,"Getting accounts for customer {0}",customer.toString());
-        if(this.customer==null || !this.customer.equals(customer))
-            this.customer=getCustomerAccountsFullInfo(customer.getId());
-        return this.customer.getAccounts();
-    }
-    /**
-     * Get movements list for customer.
-     * @param account
-     * @return A list of Movement objects containing movements info.
-     */
-     @Override
-    public List<Movement> getAccountMovementsList(Account account) {
-        if(account!=null)
-            LOGGER.log(Level.INFO,"Getting movements for account {0}",account.toString());
-        List<Movement> movements=this.customer.getAccounts().stream()
-                .filter(it->it.equals(account))
-                .collect(Collectors.toList()).get(0).getMovements();
-        return movements;
-     }
     /**
      * Set server name for serverside application to be used 
      * @param serverName the serverName in which the server side application resides.
      */
     @Override
     public void setServerName(String serverName) {
-        if(serverName!=null)
-            LOGGER.log(Level.INFO,"Setting server name to {0}",serverName);
+        LOGGER.log(Level.INFO,"Setting server name to {0}",serverName);
         URI = "http://"+serverName+":8080/CRUDBankServerSide/webresources";
     }
 }
