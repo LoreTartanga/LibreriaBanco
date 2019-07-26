@@ -27,12 +27,14 @@ public class CustomerRESTClient {
     private WebTarget webTarget;
     private Client client;
     private static final String BASE_URI = "http://localhost:8080/CRUDBankServerSide/webresources";
+    private String mediaType;
     /**
      * Construct a JAX RS client for default localhost server and customer service.
      */
     public CustomerRESTClient() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
         webTarget = client.target(BASE_URI).path("customer");
+        mediaType = javax.ws.rs.core.MediaType.APPLICATION_XML;
     }
     /**
      * Set the target for the RESTful client.
@@ -42,6 +44,13 @@ public class CustomerRESTClient {
      */
     public void setWebTarget(String base_uri,String path){
         webTarget = client.target(base_uri).path(path);
+    }
+    /**
+     * Set media type for received or sent entities. 
+     * @param mediaType as defined in javax.ws.rs.core.MediaType.
+     */
+    public void setMediaType(String mediaType){
+        this.mediaType=mediaType;
     }
     /**
      * Get customers count. 
@@ -60,7 +69,7 @@ public class CustomerRESTClient {
      * @throws ClientErrorException HTTP error.
      */
     public void edit(Object requestEntity, String id) throws ClientErrorException {
-        webTarget.path(java.text.MessageFormat.format("{0}", new Object[]{id})).request(javax.ws.rs.core.MediaType.APPLICATION_XML).put(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_XML));
+        webTarget.path(java.text.MessageFormat.format("{0}", new Object[]{id})).request(mediaType).put(javax.ws.rs.client.Entity.entity(requestEntity, mediaType));
     }
     /**
      * Get customer data.
@@ -73,7 +82,7 @@ public class CustomerRESTClient {
     public <T> T find(Class<T> responseType, String id) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id}));
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
+        return resource.request(mediaType).get(responseType);
     }
     /**
      * Get a range of customers (useful for management of big data volume). 
@@ -87,7 +96,7 @@ public class CustomerRESTClient {
     public <T> T findRange(Class<T> responseType, String from, String to) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("{0}/{1}", new Object[]{from, to}));
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
+        return resource.request(mediaType).get(responseType);
     }
     /**
      * Create a Customer on server side.
@@ -95,7 +104,7 @@ public class CustomerRESTClient {
      * @throws ClientErrorException HTTP error.
      */
     public void create(Object requestEntity) throws ClientErrorException {
-        webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_XML).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_XML));
+        webTarget.request(mediaType).post(javax.ws.rs.client.Entity.entity(requestEntity, mediaType));
     }
     /**
      * Get all Customers data.
@@ -106,7 +115,7 @@ public class CustomerRESTClient {
      */
     public <T> T findAll(Class<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
+        return resource.request(mediaType).get(responseType);
     }
     /**
      * Delete a Customer on server side.

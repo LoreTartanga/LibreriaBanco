@@ -23,6 +23,10 @@ public class CustomerManagerImplementation implements CustomerManager{
      */
     private Customer customer;
     /**
+     * The media type to be used in RESTful client, as defined in javax.ws.rs.core.MediaType.
+     */
+    private String mediaType=javax.ws.rs.core.MediaType.APPLICATION_XML;
+    /**
      * Default URI for server side application.
      */
     private String URI="http://hz059359:8080/CRUDBankServerSide/webresources";
@@ -38,6 +42,7 @@ public class CustomerManagerImplementation implements CustomerManager{
         LOGGER.log(Level.INFO,"Getting full info for customer {0}",id.toString());
         CustomerRESTClient client=new CustomerRESTClient();
         client.setWebTarget(URI, "customer");
+        client.setMediaType(mediaType);
         customer=client.find(Customer.class, id.toString());
         client.close();
         if(customer==null)
@@ -55,4 +60,12 @@ public class CustomerManagerImplementation implements CustomerManager{
         LOGGER.log(Level.INFO,"Setting server name to {0}",serverName);
         URI = "http://"+serverName+":8080/CRUDBankServerSide/webresources";
     }
+    /**
+     * Set media type for communication with server side.
+     * @param mediaType the media type as defined in javax.ws.rs.core.MediaType.
+     */
+    @Override
+    public void setMediaType(String mediaType){
+        this.mediaType=mediaType;
+    }    
 }

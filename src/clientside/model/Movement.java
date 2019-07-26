@@ -7,6 +7,7 @@ package clientside.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -31,6 +32,7 @@ public class Movement implements Serializable {
     /**
      * Timestamp for the movement.
      */
+    @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ssXXX")
     private Date timestamp;
     /**
      * Amount of the movement.

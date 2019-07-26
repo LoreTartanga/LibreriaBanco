@@ -8,6 +8,7 @@ package clientside.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -52,6 +53,7 @@ public class Account implements Serializable {
     /**
      * Begin balance timestamp.
      */
+    @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ssXXX")
     private Date beginBalanceTimestamp;
     /**
      * Relational field containing Customers owning the account. 

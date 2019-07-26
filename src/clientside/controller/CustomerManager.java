@@ -22,8 +22,13 @@ public interface CustomerManager {
      */
     public Customer getCustomerAccountsFullInfo(Long id);
     /**
-     * Set server name for serverside application to be used 
+     * Set server name for server side application to be used 
      * @param serverName the serverName in which the server side application resides.
      */
     public void setServerName(String serverName);
+    /**
+     * Set media type for communication with server side.
+     * @param mediaType the media type as defined in javax.ws.rs.core.MediaType.
+     */
+    public void setMediaType(String mediaType);
 }
