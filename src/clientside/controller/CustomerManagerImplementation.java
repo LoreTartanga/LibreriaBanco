@@ -6,11 +6,15 @@
 package clientside.controller;
 
 
+import clientside.model.Account;
 import clientside.model.Customer;
 import clientside.restclient.CustomerRESTClient;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+ 
+
 
 /**
  * Customer manager implementation to get accounts information.
@@ -31,6 +35,8 @@ public class CustomerManagerImplementation implements CustomerManager{
      */
     private String URI="http://hz059359:8080/CRUDBankServerSide/webresources";
     private static Logger LOGGER=Logger.getLogger("clientside.controller");
+    private List<Customer> customerList;
+    private CustomerRESTClient client;
     /**
      * Get customer full info: personal data, accounts and their movements from 
      * a customer RESTful service in a Java EE Server.
@@ -40,7 +46,7 @@ public class CustomerManagerImplementation implements CustomerManager{
     @Override
     public Customer getCustomerAccountsFullInfo(Long id) {
         LOGGER.log(Level.INFO,"Getting full info for customer {0}",id.toString());
-        CustomerRESTClient client=new CustomerRESTClient();
+        client=new CustomerRESTClient();
         client.setWebTarget(URI, "customer");
         client.setMediaType(mediaType);
         customer=client.find(Customer.class, id.toString());
@@ -50,6 +56,24 @@ public class CustomerManagerImplementation implements CustomerManager{
                                                 +id.toString());
         LOGGER.log(Level.INFO,"Got info for {0}",customer.toString());
         return customer;
+    }
+     /**
+     * Get customer full info: personal data, accounts and their movements from 
+     * a customer RESTful service in a Java EE Server.
+     * @return all Customer.
+     */
+    @Override
+    public List<Customer>  getAllCustomer() {
+        LOGGER.log(Level.INFO,"Getting all customer");
+        client=new CustomerRESTClient();
+        client.setWebTarget(URI, "customer");
+        client.setMediaType(mediaType);
+        customerList=client.findAll(customerList.getClass());     
+        client.close();
+        if(customerList==null)
+            throw new NoSuchElementException("Cannot find customers# ");
+        LOGGER.log(Level.INFO,"List of Customers");
+        return customerList;
     }
     /**
      * Set server name for serverside application to be used 

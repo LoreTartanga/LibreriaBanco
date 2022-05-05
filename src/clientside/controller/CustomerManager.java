@@ -21,6 +21,11 @@ public interface CustomerManager {
      * @return A Customer object containing full info.
      */
     public Customer getCustomerAccountsFullInfo(Long id);
+   /**
+     * Get all customer info: personal data, accounts and their movements.
+     * @return list Customers
+     */
+    public List<Customer> getAllCustomer();
     /**
      * Set server name for server side application to be used 
      * @param serverName the serverName in which the server side application resides.

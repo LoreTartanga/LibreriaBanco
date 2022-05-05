@@ -9,6 +9,7 @@ import clientside.model.Customer;
 import clientside.restclient.AndroidCustomerRESTClient;
 import clientside.restclient.CustomerRESTClient;
 import java.io.IOException;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +48,8 @@ public class AndroidCustomerManagerImplementation implements CustomerManager {
     /**
      * Default constructor;
      */
+    private List<Customer> customerList;
+    
     public AndroidCustomerManagerImplementation(){
         mediaType=javax.ws.rs.core.MediaType.APPLICATION_JSON;
         URI="http://localhost:8080/CRUDBankServerSide/webresources/";
@@ -85,6 +88,26 @@ public class AndroidCustomerManagerImplementation implements CustomerManager {
             throw new NoSuchElementException("Error finding customer with id # "
                         +id.toString());
         }
+    }
+    
+      /**
+     * Get customer full info: personal data, accounts and their movements from 
+     * a customer RESTful service in a Java EE Server.
+     * @return all Customer.
+     */
+    @Override
+    public List<Customer>  getAllCustomer() {
+        //LOGGER.log(Level.INFO,"Getting all customer");
+        //CustomerRESTClient client=new CustomerRESTClient();
+        //client.setWebTarget(URI, "customer");
+        //client.setMediaType(mediaType);
+        //customerList=client.findAll(customerList.getClass());     
+        //client.close();
+        //if(customerList==null)
+            //throw new NoSuchElementException("Cannot find customers# ");
+        //LOGGER.log(Level.INFO,"List of Customers");
+        
+        return customerList;
     }
     /**
      * Set server name for serverside application to be used 

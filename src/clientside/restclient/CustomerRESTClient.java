@@ -112,7 +112,7 @@ public class CustomerRESTClient {
      * @param responseType class of the type of the collection of customers.
      * @return A collection of Customers.
      * @throws ClientErrorException HTTP error.
-     */
+     */     
     public <T> T findAll(Class<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
         return resource.request(mediaType).get(responseType);
