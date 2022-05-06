@@ -62,6 +62,11 @@ public class Customer implements Serializable {
      * Relational field for customer's accounts.
      */
     private List<Account> accounts;
+    
+    private Double position; 
+      /**
+     * Balance de todas las cuentas del cliente.
+     */
     /**
      * 
      * @return the id of the customer.
@@ -196,6 +201,20 @@ public class Customer implements Serializable {
     public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
     }
+        
+    public Double getPosition() {
+        return position;
+    }
+    /**
+     * 
+     * @param id Customer's id.
+     */
+    public void setPosition(Double position) {
+        this.position = position;
+    }
+    /**
+     * @return the firstName
+     */
     /**
      * Integer representation for Customer instance.
      * @return 

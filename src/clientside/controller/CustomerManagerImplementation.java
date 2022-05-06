@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ws.rs.core.GenericType;
  
 
 
@@ -43,6 +44,7 @@ public class CustomerManagerImplementation implements CustomerManager{
      * @param id The customer id.
      * @return A Customer object containing full info.
      */
+    
     @Override
     public Customer getCustomerAccountsFullInfo(Long id) {
         LOGGER.log(Level.INFO,"Getting full info for customer {0}",id.toString());
@@ -68,7 +70,7 @@ public class CustomerManagerImplementation implements CustomerManager{
         client=new CustomerRESTClient();
         client.setWebTarget(URI, "customer");
         client.setMediaType(mediaType);
-        customerList=client.findAll(customerList.getClass());     
+        customerList=client.findAll(new GenericType<List<Customer>>(){});  
         client.close();
         if(customerList==null)
             throw new NoSuchElementException("Cannot find customers# ");

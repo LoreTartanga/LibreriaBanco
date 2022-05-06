@@ -8,6 +8,7 @@ package clientside.restclient;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 
 /**
  * Jersey REST client generated for REST resource:CustomerFacadeREST
@@ -113,7 +114,7 @@ public class CustomerRESTClient {
      * @return A collection of Customers.
      * @throws ClientErrorException HTTP error.
      */     
-    public <T> T findAll(Class<T> responseType) throws ClientErrorException {
+    public <T> T findAll(GenericType<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
         return resource.request(mediaType).get(responseType);
     }
